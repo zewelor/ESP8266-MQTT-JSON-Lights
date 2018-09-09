@@ -15,5 +15,6 @@ char *MQTT_STATE_TOPIC_PREFIX = "light/"; // e.g. led/<deviceName> and led/<devi
 
 #define LED_PIN 14 // D5 on ESP8266
 #define LED_COUNT 12
+#define NEO_PIXEL_TYPE NEO_GRB + NEO_KHZ800
 
 char *deviceName = "led";

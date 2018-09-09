@@ -29,7 +29,7 @@ bool stateOn = true;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_PIXEL_TYPE);
 
 unsigned long rgbToHex(int r, int g, int b) {
   return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
