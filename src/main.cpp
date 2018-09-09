@@ -18,7 +18,6 @@ byte red = 255;
 byte green = 255;
 byte blue = 255;
 byte brightness = 204;           // 80%
-String effect = "rainbow cycle"; // default effect ("static", "rainbow cycle" etc.)
 int speed = 50;
 
 /******************************** OTHER GLOBALS *******************************/
@@ -26,7 +25,7 @@ const char *on_cmd = "ON";
 const char *off_cmd = "OFF";
 const char *will_msg = "Offline";
 const char *online_msg = "Online";
-const char *effectString = "rainbow cycle";
+const char *effectString = DEFAULT_EFFECT;
 bool stateOn = DEFAULT_POWER_ON_STATE;
 
 WiFiClient espClient;
@@ -189,7 +188,7 @@ void sendState() {
 
   root["brightness"] = brightness;
   root["speed"] = speed;
-  root["effect"] = effect.c_str();
+  root["effect"] = effectString;
 
   char buffer[root.measureLength() + 1];
   root.printTo(buffer, sizeof(buffer));
@@ -237,7 +236,6 @@ bool processJson(char *message) {
 
   if (root.containsKey("effect")) {
     effectString = root["effect"];
-    effect = effectString;
     setEffect(effectString);
   }
 
@@ -308,7 +306,7 @@ void setup() {
   ws2812fx.setColor(rgbToHex(red, green, blue));
   ws2812fx.setSpeed(speed * 100);
   #ifdef DEFAULT_EFFECT
-  ws2812fx.setMode(DEFAULT_EFFECT);
+  setEffect(DEFAULT_EFFECT);
   #endif
   #if DEFAULT_POWER_ON_STATE
   ws2812fx.start();
